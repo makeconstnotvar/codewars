@@ -7,5 +7,5 @@ function handOutGift(name) {
     childs.push(name);
 }
 
-handOutGift("Peter")
-handOutGift("Peter"
+handOutGift("Peter");
+handOutGift("Peter");
