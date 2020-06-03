@@ -3,7 +3,7 @@ function Decorator(options) {
     options = {};
   }
   this.before = options.before;//||function(){return arguments};
-  this.after = options.after;//||function(){return arguments};
+  this.after = options.after;
 
 }
 
