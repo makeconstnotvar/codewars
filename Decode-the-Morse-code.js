@@ -17,4 +17,5 @@ function decodeMorse(morseCode) {
     .join(' ');
 }
 
-decodeMorse('.... . -.--   .--- ..- -.. .')
+const text = decodeMorse('.... . -.--   .--- ..- -.. .')
+console.log('end')
