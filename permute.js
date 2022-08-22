@@ -46,4 +46,27 @@ function permute(arr) {
   return results;
 }
 
-console.log(permute(['a', 'b', 'c']))
+//console.log(permute(['a', 'b', 'c']))
+
+function permute2(arr) {
+  const result = [arr];
+  const N = arr.length;
+  const p = arr.map((_, i) => i);
+  let i = 1;
+  console.log(p)
+  while (i < N) {
+
+    p[i]--;
+    console.log(p)
+    i = 1;
+    result.push(arr)
+
+    while (p[i] == 0) {
+      p[i] = i;
+      i++;
+    }
+  }
+  return result;
+}
+
+permute2(['a', 'b', 'c','d'])
