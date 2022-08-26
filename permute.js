@@ -46,7 +46,24 @@ function permute(arr) {
   return results;
 }
 
-//console.log(permute(['a', 'b', 'c']))
+
+function swap(arr, a, b) {
+  const temp = arr[a];
+  arr[a] = arr[b];
+  arr[b] = temp;
+}
+function swap1(arr, a, b) {
+  arr[a] = arr[a]^arr[b];
+  arr[b] = arr[b]^arr[a];
+  arr[a] = arr[a]^arr[b];
+}
+let a = [1,2,3,4]
+let x = swap1(a, 2,1)
+
+
+console.log(1)
+
+
 
 function permute2(arr) {
   const result = [arr];
@@ -57,9 +74,8 @@ function permute2(arr) {
   while (i < N) {
 
     p[i]--;
-    console.log(p)
     i = 1;
-    result.push(arr)
+    console.log(p)
 
     while (p[i] == 0) {
       p[i] = i;
@@ -69,4 +85,4 @@ function permute2(arr) {
   return result;
 }
 
-permute2(['a', 'b', 'c','d'])
+permute2(['a', 'b', 'c', 'd'])
