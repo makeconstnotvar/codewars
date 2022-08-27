@@ -1,72 +1,70 @@
-function resolve() {
-  let n = 100;
-  let div = 2;
-  let results = [];
-  while (n > 1) {
-    let x = n % div;
-    if (x == 0) {
-      results.push(div);
-      n = n / div;
-      if (isPrime(n)) {
-        results.push(n);
-        break;
-      }
-    } else {
-      div = div % 2 == 0 ? div + 1 : div + 2;
-    }
-  }
-  console.log(results.join(' '));
-}
-
-function primeSieve(max) {
-  let n = (max - 1) / 2;
-  let results = [];
-  let imax = (Math.sqrt(2 * n + 1) - 1) / 2;
-
-  for (let i = 1; i <= n; i++)
-    results[i] = 1;
-
-  for (let i = 1; i <= imax; i++) {
-    let jmax = (n - i) / (2 * i + 1);
-    for (let j = i; j <= jmax; j++) {
-      let a = i + j + 2 * i * j;
-      results[a] = 0;
-    }
-  }
-
-  let nums = results.reduce((acc, val, idx) => {
-    if (val)
-      acc.push(2 * idx + 1);
-    return acc;
-  }, [2]);
-
-  return nums;
-}
-
-function isPrime(num) {
-  for (let i = 2; i <= Math.sqrt(num); i++)
-    if (num % i === 0) return false;
-  return num > 1;
-}
+const primes = new Set();
 
 function primeSeiveEratosthenes(max) {
-  let primes = [];
-  let out = new Array(max+1);
+  const seive = new Array(max + 1);
 
   for (let i = 2; i <= max; i++) {
-    if (!out[i]) {
-      primes.push(i);
+    if (!seive[i]) {
+      primes.add(i);
       for (let j = i * i; j <= max; j = j + i) {
-        out[j] = 1
+        seive[j] = 1;
       }
     }
   }
 
   return primes;
 }
-console.time('a')
-let a = primeSeiveEratosthenes(100000)
-console.timeEnd('a')
-console.time('b')
-let b = primeSieve(100000)
-console.timeEnd('b')
+
+function isPrime(num) {
+  return primes.has(num)
+}
+
+function permute(arr) {
+  let results = [];
+  if (arr.length == 1) {
+    return [arr];
+  }
+  arr.forEach((letter,i) => {
+    let tail = arr.filter((_,j) => j != i);
+    let temp = permute(tail);
+
+    temp.forEach(x => {
+      x.unshift(letter)
+    })
+    results = results.concat(temp)
+  })
+
+  return results;
+}
+
+function numToArray(num) {
+  return num.toString().split('');
+}
+
+function permuteNum(num){
+  const arr = numToArray(num);
+  const temp = permute(arr);
+  const nums = temp.map(x=>arrayToNum(x));
+  const uniq = new Set(nums);
+  return Array.from(uniq);
+}
+
+function arrayToNum(arr) {
+  return parseInt(arr.join(''));
+}
+
+function permutationalPrimes(max, k) {
+  const permutes = new Map();
+  primeSeiveEratosthenes(max);
+  primes.forEach(x=>{
+    if(x>10){
+     let test = permuteNum(x);
+     if(test.length==3){
+       console.log(1)
+     }
+
+    }
+  })
+}
+//[3, 149, 379] count, min, max
+permutationalPrimes(1000, 3)
