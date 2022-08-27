@@ -24,8 +24,8 @@ function permute(arr) {
   if (arr.length == 1) {
     return [arr];
   }
-  arr.forEach((letter,i) => {
-    let tail = arr.filter((_,j) => j != i);
+  arr.forEach((letter, i) => {
+    let tail = arr.filter((_, j) => j != i);
     let temp = permute(tail);
 
     temp.forEach(x => {
@@ -41,10 +41,10 @@ function numToArray(num) {
   return num.toString().split('');
 }
 
-function permuteNum(num){
+function permuteNum(num) {
   const arr = numToArray(num);
   const temp = permute(arr);
-  const nums = temp.map(x=>arrayToNum(x));
+  const nums = temp.map(x => arrayToNum(x));
   const uniq = new Set(nums);
   return Array.from(uniq);
 }
@@ -56,15 +56,15 @@ function arrayToNum(arr) {
 function permutationalPrimes(max, k) {
   const permutes = new Map();
   primeSeiveEratosthenes(max);
-  primes.forEach(x=>{
-    if(x>10){
-     let test = permuteNum(x);
-     if(test.length==3){
-       console.log(1)
-     }
-
+  primes.forEach(x => {
+    if (x > 10) {
+      let test = permuteNum(x);
+      if (test.length == 3) {
+        console.log(1)
+      }
     }
   })
 }
+
 //[3, 149, 379] count, min, max
 permutationalPrimes(1000, 3)
