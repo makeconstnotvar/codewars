@@ -1,22 +1,17 @@
-const primes = new Set();
+const primeSet = {};
+primeSeiveEratosthenes(50000);
+const primes = Object.values(primeSet);
 
 function primeSeiveEratosthenes(max) {
   const seive = new Array(max + 1);
-
   for (let i = 2; i <= max; i++) {
     if (!seive[i]) {
-      primes.add(i);
+      primeSet[i] = i;
       for (let j = i * i; j <= max; j = j + i) {
         seive[j] = 1;
       }
     }
   }
-
-  return primes;
-}
-
-function isPrime(num) {
-  return primes.has(num)
 }
 
 function permute(arr) {
@@ -37,34 +32,43 @@ function permute(arr) {
   return results;
 }
 
-function numToArray(num) {
-  return num.toString().split('');
-}
-
-function permuteNum(num) {
-  const arr = numToArray(num);
+function permuteNum(num, max) {
+  const arr = num.toString().split('');
   const temp = permute(arr);
-  const nums = temp.map(x => arrayToNum(x));
-  const uniq = new Set(nums);
-  return Array.from(uniq);
-}
-
-function arrayToNum(arr) {
-  return parseInt(arr.join(''));
-}
-
-function permutationalPrimes(max, k) {
-  const permutes = new Map();
-  primeSeiveEratosthenes(max);
-  primes.forEach(x => {
-    if (x > 10) {
-      let test = permuteNum(x);
-      if (test.length == 3) {
-        console.log(1)
+  const nums = temp.reduce((acc, x) => {
+    let str = x.join('')
+    if (!/^0+/.test(str)) {
+      const int = parseInt(str);
+      if (int <= max && primeSet[int]) {
+        acc.push(int);
       }
     }
-  })
+    return acc;
+  }, []);
+  const uniq = new Set(nums);
+  return Array.from(uniq).sort();
+}
+
+function permutational_primes(max, k) {
+  const permutes = {};
+  let limit = primes.findIndex(x => x >= max)
+  for (let i = 5; i < limit; i++) {
+    let x = primes[i]
+    let permutedPrimes = permuteNum(x, max);
+    if (permutedPrimes.length == k + 1) {
+      const [a, ...rest] = permutedPrimes;
+      if (!permutes[a]) {
+        permutes[a] = a;
+      }
+    }
+  }
+
+  const permutesArr = Object.values(permutes);
+  return [permutesArr.length, permutesArr[0] || 0, permutesArr[permutesArr.length - 1] || 0];
 }
 
 //[3, 149, 379] count, min, max
-permutationalPrimes(1000, 3)
+console.time('b')
+console.log(permutational_primes(27185, 4))
+
+console.timeEnd('b')
