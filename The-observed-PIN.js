@@ -19,13 +19,18 @@ function getPINs(observed) {
 
 
 function cartesianProduct(arr) {
-  return arr.reduce(function (a, b) {
-    return a.map(function (x) {
-      return b.map(function (y) {
-        return x.concat(y);
+  let result =  arr.reduce((acc, list) => {
+    let _m = acc.map(function (x) {
+      let _b = list.map(function (item) {
+        return x.concat(item);
       })
-    }).reduce(function (a, b) {
-      return a.concat(b)
-    }, [])
-  }, [[]])
+      return _b;
+    })
+    return _m.flat();
+  }, [[]]);
+  return result;
 }
+
+//27
+let result = getPINs('137')
+console.log(1)
