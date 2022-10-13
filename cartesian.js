@@ -16,7 +16,6 @@ function cartesianProduct(arr) {
 //27
 //let result = cartesianProduct([[1,2,3],[4,5,6],[7,8,9]])
 
-
 function sum(arr) {
   const merge = (a, b) => {
     let aSet = new Set(a);
@@ -35,6 +34,17 @@ function sum(arr) {
   return result;
 }
 
-console.log(sum([[1, 2, 3], [3, 4, 5], [5, 6, 7]]))
+//console.log(sum([[1, 2, 3], [3, 4, 5], [5, 6, 7]]))
 
-console.log('done')
+//console.log('done')
+
+function multi(arrs){
+  if(arrs.length == 0)
+    return [[]];
+  arrs.forEach(arr=>{
+    arr.forEach(x=>{
+
+    })
+  })
+}
+multi([[1,2],[3,4]])
