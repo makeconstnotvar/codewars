@@ -37,14 +37,30 @@ function sum(arr) {
 //console.log(sum([[1, 2, 3], [3, 4, 5], [5, 6, 7]]))
 
 //console.log('done')
-
-function multi(arrs){
-  if(arrs.length == 0)
-    return [[]];
-  arrs.forEach(arr=>{
-    arr.forEach(x=>{
-
+//[1,2][3,4]
+//[1][2]
+//[1,3][1,4][2,3][2,4]
+function multi(arrs) {
+  arrs.reduce((acc, arr) => {
+    let test = arr.map(x => {
+      acc.forEach(item => {
+        item.push(x)
+      })
+      return acc
     })
-  })
+    console.log(test)
+  }, [[]])
 }
-multi([[1,2],[3,4]])
+
+function multi1(list1, list2) {
+  let result = list1.map(l1 => {
+    return list2.map(l2 => {
+      return [l1].concat(l2);
+    })
+  }).flat()
+  return result;
+}
+
+multi1([1, 2], [3, 4])
+
+//multi([[1, 2], [3, 4], [5, 6]])
