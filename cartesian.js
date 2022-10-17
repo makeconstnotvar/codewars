@@ -40,27 +40,48 @@ function sum(arr) {
 //[1,2][3,4]
 //[1][2]
 //[1,3][1,4][2,3][2,4]
-function multi(arrs) {
-  arrs.reduce((acc, arr) => {
-    let test = arr.map(x => {
-      acc.forEach(item => {
-        item.push(x)
-      })
-      return acc
-    })
-    console.log(test)
-  }, [[]])
+function cartesian(arrs) {
+  return arrs.reduce((acc, arr) => {
+    acc = multi(acc, arr);
+    return acc;
+  }, [[]]);
 }
 
-function multi1(list1, list2) {
-  let result = list1.map(l1 => {
-    return list2.map(l2 => {
-      return [l1].concat(l2);
-    })
-  }).flat()
+function multi(one, two) {
+  const temp = one.map(o => {
+    return two.map(t => {
+      return o.concat(t);
+    });
+  });
+  let result = temp.flat();
   return result;
 }
 
-multi1([1, 2], [3, 4])
+//let result = cartesian([[1, 2], [3, 4], [5, 6]]);
+
+//console.table(result);
 
 //multi([[1, 2], [3, 4], [5, 6]])
+
+
+function myFunc(arrs) {
+  // две проверки для норм вывода при [] и [[1, 2]]
+  if (!arrs.length) return []
+  if (arrs.length === 1) return arrs[0]
+
+  // вырезаем в result первый элемент,
+  // делая из каждого эменнта отдельный массив [1, 2] -> [[1], [2]]
+  let result = arrs.splice(0, 1)[0].map(item => [item]);
+
+  for (let arr of arrs) {
+    // проходимся по result и умножаем каждый элемент на следующий массив в arrs
+    // при первой итерации, получается [1] * [3, 4] = [[1, 3], [1, 4]]
+    // вставляем [1, 3], [1, 4] в result вместо [1]
+    result = result.reduce((prevState, item) => {
+      return prevState.concat(arr.map((curItem) => item.concat(curItem)));
+    }, []);
+  }
+
+  return result;
+}
+console.table(myFunc([[1, 2], [3, 4], [5, 6]]))
