@@ -56,8 +56,13 @@ function multi(one, two) {
   let result = temp.flat();
   return result;
 }
+//[1][2]
+cartesian([[1, 2], [3, 4], [5, 6]]);
 
 //let result = cartesian([[1, 2], [3, 4], [5, 6]]);
+
+
+
 
 //console.table(result);
 
@@ -84,4 +89,4 @@ function myFunc(arrs) {
 
   return result;
 }
-console.table(myFunc([[1, 2], [3, 4], [5, 6]]))
+//console.table(myFunc([[1, 2], [3, 4], [5, 6]]))
