@@ -8,25 +8,34 @@ function lengthOfLongestSubstring(str) {
   let scanTo = 0;
   for (let i = 0; i < str.length; i++) {
     const letter = str[i]
-    if (!cache[letter]) {
-      cache[letter] = 1;
+    if (cache[letter] == null) {
+      cache[letter] = i;
       currentLen++;
-      scanTo=i;
+      scanTo = i;
       if (currentLen > maxLen) {
         maxLen = currentLen;
         from = scanFrom;
         to = i;
       }
     } else {
-      cache = {[letter]: 1};
-      currentLen = 1;
-      scanFrom = i;
+      scanFrom = cache[letter] + 1;
       scanTo = i;
+      currentLen = scanTo - scanFrom + 1;
+      let x = scanFrom;
+      cache = {}
+      while(x<=scanTo){
+         cache[str[x]]=x;
+         x++
+      }
     }
 
   }
-  return str.substring(from,to+1);
+  console.log(str.substring(from, to + 1))
+  return to - from + 1;
 }
 
-const result = lengthOfLongestSubstring('abcabcbb');
+//const result = lengthOfLongestSubstring('abcabcbb');
+//const result = lengthOfLongestSubstring('pwwkew');
+const result = lengthOfLongestSubstring('dvdf');
+//const result = lengthOfLongestSubstring('tmmzuxt');
 console.log(result);
