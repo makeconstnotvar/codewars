@@ -10,3 +10,7 @@ let test2 = test1.bind(null, 200)
 
 test2(1, 2, 3)
 console.log('end')
+const test = {
+  name:'Вася'
+}
+export {test}
