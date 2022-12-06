@@ -1,17 +1,14 @@
 const parser = require("@babel/parser");
 const fs = require('fs');
 const path = require('path');
-const graph = [];
+
 const rootDir = 'E:/Samples/chess/src'
 const startFile = 'index.tsx'
 const fullPath = path.join(rootDir, startFile)
 const code = fs.readFileSync(fullPath, 'utf8');
 const meta = path.parse(fullPath);
-let current = {
-  name: meta.base,
-  childs: []
-};
-graph.push(current)
+
+
 let result = parser.parse(code, {
   sourceType: 'module',
   plugins: [
@@ -49,5 +46,28 @@ routes.forEach(route => {
   }
 })
 
+const graph = [];
+let current = graph;
+function makeModel(name){
+
+
+
+  current.childs.push(obj)
+}
 
 console.log(1)
+class Graph {
+  data;
+  constructor() {
+    this.data = []
+  }
+  add(name){
+    let obj = {
+      name,
+      childs: []
+    };
+    this.current.childs.push(obj)
+    
+  }
+  current;
+}
