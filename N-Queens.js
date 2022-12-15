@@ -51,12 +51,12 @@ function solveNQueens1(n) {
 
 function solveNQueens(n) {
   let results = [];
-
+  let validator = {};
   for (let j = 0; j < n; j++) {
     rec(0, j, n, createMatrix(n), 0);
   }
-  let strigs = results.map(matrix => matrix.map(row => row.join('')))//.filter((res, i) => i % 2 == 0)
-  return strigs;
+
+  return results;
 
   function stepHorse(x, y, n) {
     let result = [];
@@ -93,19 +93,49 @@ function solveNQueens(n) {
   function rec(x, y, n, matrix, count) {
     matrix = mark(x, y, matrix, n);
     count++;
-
-    if (count === n) {
-      console.table(matrix)
-      results.push(matrix)
+    console.table(matrix)
+    if (count == n) {
+      distinct(matrix);
     }
 
     const resultStep = stepHorse(x, y, n);
 
-    resultStep.forEach(([X, Y]) => {
-      let m = JSON.parse(JSON.stringify(matrix))
-      if (m[X][Y] == '_')
-        rec(X, Y, n, m, count);
-    });
+    let canGo = resultStep.some(([x, y]) => matrix[x][y] == '_')
+    if (canGo) {
+      resultStep.forEach(([X, Y]) => {
+        if (matrix[X][Y] == '_') {
+          let m = JSON.parse(JSON.stringify(matrix));
+          rec(X, Y, n, m, count);
+        }
+      });
+    }
+    else {
+      let coord = findCell(matrix);
+      if (coord) {
+        let [x, y] = coord;
+        let m = JSON.parse(JSON.stringify(matrix));
+        rec(x, y, n, m, count)
+      }
+    }
+  }
+
+  function distinct(matrix){
+    let strMatrix = matrix.map(row => row.join(''));
+    let chekMatrix = strMatrix.join('');
+    if(!validator[chekMatrix]){
+      validator[chekMatrix]=1;
+      results.push(strMatrix);
+    }
+  }
+
+  function findCell(matrix) {
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) {
+        if (matrix[i][j] == '_')
+          return [i, j]
+      }
+    }
+    return null
   }
 
   function createMatrix(n) {
@@ -120,16 +150,25 @@ function solveNQueens(n) {
   }
 }
 
-solveNQueens(5)
-let x = [
-  ["Q....","..Q..","....Q",".Q...","...Q."],
-  ["Q....","...Q.",".Q...","....Q","..Q.."],
-  [".Q...","...Q.","Q....","..Q..","....Q"],
-  [".Q...","....Q","..Q..","Q....","...Q."],
-  ["..Q..","Q....","...Q.",".Q...","....Q"],
-  ["..Q..","....Q",".Q...","...Q.","Q...."],
-  ["...Q.","Q....","..Q..","....Q",".Q..."],
-  ["...Q.",".Q...","....Q","..Q..","Q...."],
-  ["....Q",".Q...","...Q.","Q....","..Q.."],
-  ["....Q","..Q..","Q....","...Q.",".Q..."]
-]
+console.log(solveNQueens(6))
+
+/* n=6
+[".Q....","...Q..",".....Q","Q.....","..Q...","....Q."]
+["..Q...",".....Q",".Q....","....Q.","Q.....","...Q.."]
+["...Q..","Q.....","....Q.",".Q....",".....Q","..Q..."]
+["....Q.","..Q...","Q.....",".....Q","...Q..",".Q...."]
+*/
+
+/* n=5
+  ["Q....", "..Q..", "....Q", ".Q...", "...Q."],
+  ["Q....", "...Q.", ".Q...", "....Q", "..Q.."],
+  [".Q...", "...Q.", "Q....", "..Q..", "....Q"],
+  [".Q...", "....Q", "..Q..", "Q....", "...Q."],
+  ["..Q..", "Q....", "...Q.", ".Q...", "....Q"],
+  ["..Q..", "....Q", ".Q...", "...Q.", "Q...."],
+  ["...Q.", "Q....", "..Q..", "....Q", ".Q..."],
+  ["...Q.", ".Q...", "....Q", "..Q..", "Q...."],
+  ["....Q", ".Q...", "...Q.", "Q....", "..Q.."],
+  ["....Q", "..Q..", "Q....", "...Q.", ".Q..."]
+*/
+
