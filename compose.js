@@ -1,6 +1,8 @@
 function compose(...fns) {
   return function (x) {
-    return fns.reverse().reduce((x, fun) => fun(x), x)
+    return fns.reverse().reduce((x, fun) => {
+       return fun(x);
+    },x)
   }
 }
 
@@ -14,7 +16,7 @@ function pipe(...fns) {
 
 const pipe2 = (...fns) => x => fns.reduce((x, f) => f(x), x);
 
-let res1 = compose2(fun1, fun2, fun3)(10);
+let res1 = compose(fun1, fun2, fun3)(10);
 console.log(res1);
 
 let res2 = pipe2(fun1, fun2, fun3)(10);
