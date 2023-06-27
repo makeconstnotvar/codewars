@@ -13,17 +13,10 @@ process.stdin.on('end', resolve);
 
 function resolve(k, str) {
   let max = 0;
-  let map = {};
-  str = str.split('');
-  for (let i = 0; i < str.length; i++) {
-    map[str[i]] = 1;
-  }
-  for (let letter in map) {
-
+  for (let letter of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ') {
     let left = 0;
     let right = 0;
     let counter = str[left] == letter ? k : k - 1;
-    console.log(letter, '--')
     while (right < str.length) {
 
       while (counter > -1 && right < str.length) {
@@ -43,12 +36,6 @@ function resolve(k, str) {
           counter++
         }
       }
-      console.log(str.map((x, i) => {
-        if ([left, right].includes(i))
-          return x.toUpperCase()
-        else
-          return x.toLowerCase()
-      }).join(','), max)
     }
   }
   return max;
@@ -61,7 +48,7 @@ BAAA
   _ 
 `
 '                 '
-console.log(resolve(2, 'aaaa'))
+console.log(resolve(2, 'AAAA'))
 
 /*
 function resolve(k, str) {
