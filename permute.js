@@ -40,6 +40,7 @@ function permute(arr) {
 
   return results;
 }
+
 console.log(permute(['a', 'b', 'c',]));
 
 function swap(arr, a, b) {
