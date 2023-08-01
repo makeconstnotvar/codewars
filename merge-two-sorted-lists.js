@@ -30,6 +30,25 @@ function mergeTwoLists(list1, list2) {
   return result;
 }
 
+function mergeTwoBest(l1, l2) {
+  let temp = new ListNode(0, null);
+  let current = temp;
+
+  while (l1 && l2) {
+    if (l1.val < l2.val) {
+      current.next = l1;
+      l1 = l1.next
+    } else {
+      current.next = l2;
+      l2 = l2.next
+    }
+    current = current.next;
+  }
+  current.next = l1 || l2;
+
+  return temp.next;
+}
+
 function mergeTwoLists(list1, list2) {
   let sll = new ListNode();
   let result = sll;
