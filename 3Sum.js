@@ -17,6 +17,32 @@ function brute(nums) {
   return Object.values(triplets);
 }
 
+function threeSum(nums) {
+  let triplets = [], i, j, sum;
+  nums.sort((a, b) => a - b);
+  for (let x = 0; x < nums.length - 2; x++) {
+    if (x != 0 && nums[x] == nums[x - 1])
+      continue
+    i = x + 1;
+    j = nums.length - 1;
+    while (i < j) {
+      sum = nums[x] + nums[i] + nums[j]
+      if (sum < 0)
+        i++;
+      else if (sum > 0)
+        j--;
+      else {
+        triplets.push([nums[x], nums[i], nums[j]]);
+        //while (nums[i] == nums[i + 1]) i++;
+        //while (nums[j] == nums[j - 1]) j--;
+        i++;
+        j--;
+      }
+    }
+  }
+  return triplets;
+}
+
 function threeSum1(nums) {
   if (nums.length < 3)
     return []
@@ -76,28 +102,27 @@ function threeSum1(nums) {
   return Object.values(triplets);
 }
 
-function threeSum(nums) {
-  let triplets = [],i,j,sum;
+function threeSum2(nums) {
+  let triplets = [], i, j, sum;
   nums.sort((a, b) => a - b);
-  for (let x = 0; x < nums.length - 2; x++) {
-    if (x != 0 && nums[x] == nums[x - 1])
-      continue
-    i = x + 1;
-    j = nums.length - 1;
-    while (i < j) {
-      sum = nums[x] + nums[i] + nums[j]
-      if (sum < 0)
-        i++;
-      else if (sum > 0)
-        j--;
-      else {
-        triplets.push([nums[x], nums[i], nums[j]]);
-        while (nums[i] == nums[i + 1]) i++;
-        while (nums[j] == nums[j - 1]) j--;
-        i++;
-        j--;
+  for (let i = 0; i < nums.length - 1; i++) {
+    let left = 0;
+    let right = nums.length - 1;
+    while (left < right) {
+      if (i == left)
+        left++
+      if (i == right)
+        right--;
+      let sum = nums[i] + nums[left] + nums[right];
+      if (sum > 0) {
+        right--;
+      } else if (sum < 0) {
+        left++;
+      } else {
+        triplets.push([nums[i], nums[left], nums[right]])
       }
     }
+
   }
   return triplets;
 }
@@ -106,7 +131,10 @@ let data = [82597, -9243, 62390, 83030, -97960, -26521, -61011, 83390, -38677, 1
 //console.log(threeSum(data));
 //console.log(threeSum([1, 2, -2, -1]));
 //console.log(threeSum([-2, -1, -1, 0, 1, 1, 2]));
+
 console.log(brute([-1, 0, 1, 2, -1, -4]));
-console.log(threeSum([-1, 0, 1, 2, -1, -4]));
+
+console.log(threeSum2([-1, 0, 1, 2, -1, -4]));
 
 //console.log(threeSum([-1, 0, 1, 2, -1, -4, -2, -3, 3, 0, 4]));
+
