@@ -1,14 +1,22 @@
-var rob = function(root) {
-  let dp = [];
-  function scan(el){
-    let max = 0;
-    if(el.left!=null){
+function rob(root) {
+  const dfs = (node) => {
+    if (!node) {
+      return {withValue: 0, withoutValue: 0}
+    }
 
-      scan(el.left)
-    }
-    if(el.right!=null){
-      scan(el.right)
-    }
+    const left = dfs(node.left);
+    const right = dfs(node.right);
+
+    const leftBranch = Math.max(left.withValue, left.withoutValue);
+    const rightBranch = Math.max(right.withValue, right.withoutValue);
+
+    const withoutValue = leftBranch + rightBranch;
+    const withValue = node.val + left.withoutValue + right.withoutValue;
+
+    return {withValue, withoutValue};
   }
-  scan(root)
-};
+
+  const {withValue, withoutValue} = dfs(root);
+
+  return Math.max(withValue, withoutValue);
+}
