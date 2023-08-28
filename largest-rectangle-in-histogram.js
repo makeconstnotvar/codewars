@@ -1,6 +1,7 @@
-let data = [2, 1, 2]
+//let data = [5, 4, 1, 2]
+let data = [3, 2, 1, 2, 3]
 
-function largestRectangleArea(h) {
+function largestRectangleArea1(h) {
   let stack = [{val: h[0], size: 1}];
   let max = h[0];
   for (let i = 1; i < h.length; i++) {
@@ -8,7 +9,6 @@ function largestRectangleArea(h) {
 
     if (stack.length == 0 || val >= stack[stack.length - 1].val) {
       stack.push({val, size: i + 1});
-      max = Math.max(max, val);
     } else {
       let last;
       while (stack[stack.length - 1] && val < stack[stack.length - 1].val) {
@@ -17,7 +17,6 @@ function largestRectangleArea(h) {
         max = Math.max(max, rec);
       }
       stack.push({val, size: last.size});
-      max = Math.max(max, val);
     }
   }
   while (stack.length > 0) {
@@ -28,4 +27,35 @@ function largestRectangleArea(h) {
   return max;
 }
 
-console.log(largestRectangleArea(data))
+
+function largestRectangleArea2(h) {
+  let stack = [0];
+  let max = h[0];
+  for (let i = 1; i < h.length; i++) {
+    while (stack.length > 0 && (i == h.length || h[i] < h[stack.at(-1)])) {
+      let last = stack.pop();
+      let H = h[last]
+      let W = i - last;
+      max = Math.max(max, H * W);
+    }
+    stack.push(i);
+  }
+  return max;
+}
+
+function largestRectangleArea3(h) {
+  const stack = [];
+  let max = 0;
+
+  for (let i = 0; i <= h.length; i++) {
+    while (stack.length > 0 && (i === h.length || h[i] < h[stack.at(-1)])) {
+      const H = h[stack.pop()];
+      const W = stack.length === 0 ? i : i - stack.at(-1) - 1;
+      max = Math.max(max, H * W);
+    }
+    stack.push(i);
+  }
+  return max;
+}
+
+console.log(largestRectangleArea3(data))
