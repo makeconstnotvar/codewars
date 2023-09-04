@@ -1,69 +1,159 @@
-let count = 0;
-function sort(arr) {
-  let len = arr.length;
+function sortAsc(arr) {
+  heapifyMax(arr)
 
-  let mid = Math.floor(len / 2) - 1
-  for (let i = mid; i >= 0; i--)
-    down(arr, i);
-
-  for (let i = len - 1; i > 0; i--) {
-
+  for (let i = arr.length - 1; i > 0; i--) {
     swap(arr, 0, i);
-    down(arr, 0, i);
+    downMaxLimited(arr, 0, i);
+  }
+  return arr;
+}
+
+function sortDesc(arr) {
+  heapifyMin(arr)
+
+  for (let i = arr.length - 1; i > 0; i--) {
+    swap(arr, 0, i);
+    downMinLimited(arr, 0, i);
   }
   return arr;
 }
 
 function swap(arr, a, b) {
-  count++
   let temp = arr[a];
   arr[a] = arr[b];
   arr[b] = temp;
 }
 
-function down(arr, parentIdx, limitIdx) {
-  if (limitIdx == null) {
-    limitIdx = arr.length - 1;
+function heapifyMax(arr) {
+  let mid = Math.floor(arr.length / 2) - 1
+  for (let i = mid; i >= 0; i--)
+    downMax(arr, i);
+  return arr;
+}
+
+function downMax(arr, i) {
+  if (arr[i] == null)
+    return
+
+  let left = 2 * i + 1;
+  let right = 2 * i + 2;
+  let max;
+
+  if (arr[right] == null || arr[left] > arr[right]) {
+    max = left;
+  } else {
+    max = right;
   }
-  let leftIdx = 2 * parentIdx + 1;
-  let rightIdx = 2 * parentIdx + 2;
-  let maxIdx = arr[rightIdx] != null && arr[leftIdx] < arr[rightIdx] ? rightIdx : leftIdx;
-  while (maxIdx < limitIdx && arr[parentIdx] < arr[maxIdx] && arr[maxIdx] != null) {
-    swap(arr, parentIdx, maxIdx);
-    parentIdx = maxIdx;
-    leftIdx = 2 * parentIdx + 1;
-    rightIdx = 2 * parentIdx + 2;
-    maxIdx = arr[rightIdx] != null && arr[leftIdx] < arr[rightIdx] ? rightIdx : leftIdx;
+
+  while (arr[i] < arr[max]) {
+    swap(arr, i, max);
+    downMax(arr, max)
+  }
+}
+
+function heapifyMin(arr) {
+  let mid = Math.floor(arr.length / 2) - 1
+  for (let i = mid; i >= 0; i--)
+    downMin(arr, i);
+  return arr;
+}
+
+function downMin(arr, i) {
+  if (arr[i] == null)
+    return
+
+  let left = 2 * i + 1;
+  let right = 2 * i + 2;
+  let min;
+
+  if (arr[right] == null || arr[left] < arr[right]) {
+    min = left;
+  } else {
+    min = right;
+  }
+
+  while (arr[min] < arr[i]) {
+    swap(arr, i, min);
+    downMin(arr, min)
+  }
+}
+
+function print(arr) {
+  let from = 0;
+  let to = 0;
+  let counter = 1;
+  arr.forEach((x, i) => {
+    if (i == to) {
+      console.log(arr.slice(from, from + to || 1).join(' '))
+      from = from + to || 1
+      to = Math.pow(2, counter);
+      counter++;
+    }
+  })
+
+}
+
+function downMinLimited(arr, i, limit) {
+  let left = 2 * i + 1;
+  let right = 2 * i + 2;
+  let target;
+
+  if (arr[right] == null || arr[left] < arr[right]) {
+    target = left;
+  } else {
+    target = right;
+  }
+
+  while (target < limit && arr[target] != null && arr[i] > arr[target]) {
+    swap(arr, i, target);
+    downMinLimited(arr, target, limit)
+  }
+}
+
+function downMaxLimited(arr, i, limit) {
+  let left = 2 * i + 1;
+  let right = 2 * i + 2;
+  let target;
+
+  if (arr[right] == null || arr[left] > arr[right]) {
+    target = left;
+  } else {
+    target = right;
+  }
+
+  while (target < limit && arr[target] != null && arr[i] < arr[target]) {
+    swap(arr, i, target);
+    downMaxLimited(arr, target, limit)
+  }
+}
+
+function down(arr, i, limit) {
+  let left = 2 * i + 1;
+  let right = 2 * i + 2;
+  //максимальный ребенок
+  let target = arr[right] == null && arr[left] > arr[right] ? left : right;
+
+  while (target < limit && arr[target] != null && arr[i] < arr[target]) {
+    swap(arr, i, target);
+    i = target;
+    left = 2 * i + 1;
+    right = 2 * i + 2;
+    target = arr[right] == null && arr[left] > arr[right] ? left : right;
   }
 }
 
 //let data = [2, 21, 5, 4, 11, 6, 8, 25, 12, 20]
-//console.log(down(data, 0))
+let data = [1, 7, 11, 9, 12, 10, 2, 4, 3, 5, 6, 9, 8, 5];
+print(data)
+//console.log(' ')
+//console.log(print(heapifyMax(data)))
+//console.log(' ')
+//console.log(print(heapifyMin(data)))
+//console.log(print(heapifyMin(data)))
+//console.log(' ')
+//console.log(sortAsc(data).join(','))
+console.log(' ')
+console.log(sortDesc(data).join(','))
+/*
 
-function heapify(arr, len, i) {
-  let largest = i; // Initialize largest as root
-  let left = 2 * i + 1;
-  let right = 2 * i + 2;
-
-  // If left child is larger than root
-  if (left < len && arr[left] > arr[largest])
-    largest = left;
-
-  // If right child is larger than largest so far
-  if (right < len && arr[right] > arr[largest])
-    largest = right;
-
-  // If largest is not root
-  if (largest != i) {
-    let swap = arr[i];
-    arr[i] = arr[largest];
-    arr[largest] = swap;
-
-    // Recursively heapify the affected sub-tree
-    heapify(arr, len, largest);
-  }
-}
-
-const arr = [1, 7, 11, 9, 12, 10, 2, 4, 3, 5, 6, 9, 8, 5];
-console.log(sort(arr))
-console.log(count)
+*/
