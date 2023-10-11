@@ -143,17 +143,39 @@ function down(arr, i, limit) {
 }
 
 //let data = [2, 21, 5, 4, 11, 6, 8, 25, 12, 20]
-let data = [1, 7, 11, 9, 12, 10, 2, 4, 3, 5, 6, 9, 8, 5];
-print(data)
+//let data = [1, 7, 11, 9, 12, 10, 2, 4, 3, 5, 6, 9, 8, 5];
+let data = [1, 7, 10, 9, 15, 13, 2, 4, 3, 5, 6, 9, 8, 5];
+//print(data)
+console.log(data.join(' '))
+console.log(print(heapifyMax(data)))
 //console.log(' ')
-//console.log(print(heapifyMax(data)))
-//console.log(' ')
-//console.log(print(heapifyMin(data)))
+//console.log(heapifyMin(data).join(' '))
 //console.log(print(heapifyMin(data)))
 //console.log(' ')
 //console.log(sortAsc(data).join(','))
-console.log(' ')
-console.log(sortDesc(data).join(','))
+//console.log(' ')
+//console.log(sortDesc(data).join(','))
 /*
+Math.floor((i-1)/2)
+let left = 2*i+1
+let right = 2*i+2
+14/2 = 7-1 = 6
+let mid = Math.floot(arr.length/2)-1 -> 0
+                      1
+                 3          2
+               4 5          8  5
+            7 9   12 6    9 10    11
+
+             1
+       3            2
+    4      5      8     5
+  7 9    12 6    9 10   11
+
+12,
+11,10,
+9,9,8,7
+6,5,5,4,3,2,1
+
+,3,9,9,8,7,6,5,5,1,2,4,|10,11,12
 
 */
