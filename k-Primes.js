@@ -12,9 +12,9 @@ function getKPrimes(n) {
   return result;
 }
 
-function countKprimes(k, start, nd) {
+function countKprimes(k, start,  end) {
   var result = [];
-  for(var i = Math.max(start, 2); i <= nd; i++) {
+  for(var i = Math.max(start, 2); i <= end; i++) {
     var kPrimes = getKPrimes(i);
     if (kPrimes.length === k) {
       result.push(i);
@@ -22,7 +22,7 @@ function countKprimes(k, start, nd) {
   }
   return result;
 }
-
+countKprimes(5,500,600)
 function puzzle(s) {
   var p1 = countKprimes(1, 2, s),
     p3 = countKprimes(3, 2, s),
