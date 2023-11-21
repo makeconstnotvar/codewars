@@ -1,21 +1,27 @@
 //let data = [3, 13, 12, 4, 14, 6]
-let data = [0, 2, 10,20,22]
+let data =  [1, 2, 4, 5, 8, 9]
+/*
+  [1, 2, 4, 5, 8, 9]
+   1- 2--4- 5---8-9
+i=1 -                 dist [1]
+i=2 -  --             dist [1,3]
+i=3 -     -           dist [1,3,2]
+i=4 -     -  ---      dist [1,3,2,5]
+i=5 -     -      -    dist [1,3,2,5,3]
+ответ = текущая верека + самая короткая из 2-х ранее посчитанных
+*/
+
 
 data.sort((a, b) => a - b);
 
-let sum = 0;
-let dist = [data[1]-data[0]];
-if(data.length>3) {
+let dist = [];
+dist[0] = data[1] - data[0];
+if (data.length > 2)
+  dist[1] = data[2] - data[0];
 
-    for (let i = 1; i < data.length; i++) {
-        //dist.push(data[i] - data[i - 1]);
-        dist[i] = Math.min(dist[i - 1], dist[i - 2]) + data[i] - data[i - 1];
-    }
-    for (let i = 1; i < dist.length; i++) {
-        sum += Math.min(dist[i], dist[i - 1]);
-    }
+for (let i = 3; i < data.length; i++) {
+  let delta = data[i] - data[i - 1];
+  dist[i - 1] = Math.min(dist.at(-1) + delta, dist.at(-2) + delta);
 }
-else{
-    sum = data[data.length-1]- data[0]
-}
-console.log(sum)
+
+console.log(dist.at(-1))
