@@ -1,22 +1,24 @@
+
 const isPalindrome = str => str == str.split('').reverse().join('');
+
 const partition = (str) => {
-  let result = []
-  let stack = []
+  let result = [];
+  let stack = [];
   let rec = start => {
     if (start == str.length) {
-      result.push(stack.slice())
-      return
+      result.push(stack.slice());
+      return;
     }
-    for (let i = start; i < str.length; i++) {
-      let tail = str.substring(start,i);
+    for (let i = start + 1; i <= str.length; i++) {
+      let tail = str.substring(start, i);
       if (isPalindrome(tail)) {
-        stack.push(tail)
-        rec(start + 1);
-        stack.pop()
+        stack.push(tail);
+        rec(i);
+        stack.pop();
       }
     }
   }
-  rec(0)
+  rec(0);
   return result;
 }
 

@@ -11,15 +11,16 @@ const exist = (board, word) => {
       return false;
     }
 
-    used[`${y},${x}`] = 1
+    //used[`${y},${x}`] = 1
     i++;
-
+    let temp = board[y][x];
+    board[y][x] = '.';
     if (rec(i, y, x + 1)) return true;
     if (rec(i, y + 1, x)) return true;
     if (rec(i, y - 1, x)) return true;
     if (rec(i, y, x - 1)) return true;
-
-    used[`${y},${x}`] = 0
+    board[y][x] = temp;
+    //used[`${y},${x}`] = 0
   }
 
   for (let i = 0; i < h; i++) {
@@ -38,6 +39,6 @@ const exist = (board, word) => {
 ["A","D","E","E"]
 */
 
-let res = exist([["A"]], "A")
+let res = exist([["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], "ABCCED")
 
 console.log(res)
