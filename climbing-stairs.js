@@ -9,3 +9,5 @@ const climbStairs = n => {
   }
   return b;
 };
+
+console.log(climbStairs(33))
