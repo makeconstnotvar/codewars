@@ -1,4 +1,28 @@
 const wordBreak = (str, dic) => {
+  const dp = Array(str.length).fill(0);
+  dp[str.length] = 1;
+  for (let i = str.length - 1; i >= 0; i--) {
+    for (let word of dic) {
+      if (str.slice(i, i + word.length) === word) {
+        dp[i] = dp[i] || dp[i + word.length]
+      }
+    }
+  }
+  return dp[0] == 1;
+}
+
+
+
+//catsandog
+//000000010
+//000000100
+
+console.log(wordBreak('leetcodeso', ['cod', 'code', 'so', 'leet']));
+console.log(wordBreak('catsandog', ["cats", "dog", "sand", "and", "cat"]));
+console.log(wordBreak('aaaaaaa', ["aaaa", "aaa"]));
+console.log(wordBreak('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', ["a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa"]));
+
+const wordBreak3 = (str, dic) => {
   const end = str.length;
   const dp = Array(end).fill(0);
   dp[end] = 1;
@@ -12,15 +36,6 @@ const wordBreak = (str, dic) => {
   }
   return dp[0] == 1;
 }
-//catsandog
-//000000010
-//000000100
-
-console.log(wordBreak('leetcodeso', ['cod', 'code', 'so', 'leet']));
-console.log(wordBreak('catsandog', ["cats", "dog", "sand", "and", "cat"]));
-console.log(wordBreak('aaaaaaa', ["aaaa", "aaa"]));
-console.log(wordBreak('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', ["a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa"]));
-
 
 const wordBreak2 = (str, dic) => {
   const set = new Set(dic);
